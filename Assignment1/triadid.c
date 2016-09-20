@@ -49,6 +49,7 @@ int main() {
   }
 
   // classify triad
+  // sort into a starting order
   for (int i = 0; i < 2; i++) {
     for (int o = 0; o < 2-i; o++) {
       if (classes[o] > classes[o+1]) {
@@ -56,28 +57,41 @@ int main() {
       }
     }
   }
-  printf("%d  %d  %d\n", classes[0],classes[1],classes[2]);
-  switch (classes[2]-classes[0]) {
-    case 7: {
-      if (classes[1]-classes[0] == 3)
-        printf("%s - %s - %s forms a minor triad\n", strclasses[0], strclasses[1], strclasses[2]);
-      if (classes[1] - classes[0] == 4)
-        printf("%s - %s - %s forms a major triad\n", strclasses[0], strclasses[1], strclasses[2]);
-      break;
+  int flag = 0;
+  int temp = 0;
+  for (int i = 0; i < 3; i++) {
+    printf("%d  %d  %d\n", classes[0],classes[1],classes[2]);
+    switch (classes[2]-classes[0]) {
+      case 7: {
+        if (classes[1]-classes[0] == 3)
+          printf("%s - %s - %s forms a minor triad\n", strclasses[0], strclasses[1], strclasses[2]);
+          flag = 1;
+        if (classes[1] - classes[0] == 4)
+          printf("%s - %s - %s forms a major triad\n", strclasses[0], strclasses[1], strclasses[2]);
+          flag = 1;
+        break;
+      }
+      case 6: {
+        if (classes[1]-classes[0] == 3)
+          printf("%s - %s - %s forms a diminished triad\n", strclasses[0], strclasses[1], strclasses[2]);
+          flag = 1;
+        break;
+      }
+      case 8: {
+        if (classes[1]-classes[0] == 4)
+          printf("%s - %s - %s forms a augmented triad\n", strclasses[0], strclasses[1], strclasses[2]);
+          flag = 1;
+        break;
+      }
+      default:
+        break;
     }
-    case 6: {
-      if (classes[1]-classes[0] == 3)
-        printf("%s - %s - %s forms a diminished triad\n", strclasses[0], strclasses[1], strclasses[2]);
-      break;
-    }
-    case 8: {
-      if (classes[1]-classes[0] == 4)
-        printf("%s - %s - %s forms a augmented triad\n", strclasses[0], strclasses[1], strclasses[2]);
-      break;
-    }
-    default:
-      printf("Notes do not form a triad\n");
-      break;
+    if (flag) break;
+    temp = classes[0];
+    classes[0] = classes[1]; classes[1] = classes[2]; classes[2] = temp+12;
+  }
+  if (!flag) {
+    printf("Notes Do not form a triad\n");
   }
 }
 
