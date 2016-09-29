@@ -15,12 +15,14 @@ int main (int argc, char[] argv) {
   time_t t;  // variable to hold system time that will seed the random number gen
   int voiceLeadingFlag = 1;
   int melodyCounter = 0;
+  int melodySize = BLOCK;  // keeps track of the size of the melody
+  int n = 1; // multipicator for melodySize
   int note;
   int dur;
   srand((unsigned) time(&t));  // seed rand
 
   // declare block of struct pointers
-  NOTE **Melody = malloc(BLOCK * sizeof(NOTE*));
+  NOTE **Melody = malloc(BLOCK * sizeof(*NOTE));
 
   // allocate first C note at beginning of Melody
   Melody[0] = malloc(sizeof(NOTE));
@@ -31,7 +33,10 @@ int main (int argc, char[] argv) {
   while (voiceLeadingFlag == 1) {
     melodyCounter++;
     // check if more memory is needed
-    if (melodyCounter == sizeof(Melody))
+    if (melodyCounter == n*BLOCK) {
+      n++;
+      Melody = realloc(Melody, n*BLOCK*sizeof(*NOTE));
+    }
     note = (rand()%(8-1))+1;
     // Check for avoid conditions
     // check for leading voice conditions
@@ -40,7 +45,10 @@ int main (int argc, char[] argv) {
     Melody[melodyCounter]->duration = (rand()%(3-1))+1;
   }
 
-  // print out
+  // print out the melody 
+  for (int i = 0; i < melodyCounter; i++) {
+
+  }
 }
 
 char *parseNote(int n) {
