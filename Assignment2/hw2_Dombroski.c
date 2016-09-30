@@ -44,8 +44,7 @@ int main (int argc, char *argv[]) {
     }
 
     // Generate random note
-    note = (rand()%(8-1))+1;
-      printf("%d\n", note);
+    note = (rand()%(9-1))+1;
     // Check for avoid conditions
 
     // check for leading voice conditions
@@ -54,23 +53,23 @@ int main (int argc, char *argv[]) {
     }
 
     Melody[melodyCounter] = malloc(sizeof(NOTE));
-    printf("%s\n", parseNote(note));
     strcpy(Melody[melodyCounter]->note, parseNote(note));
-    Melody[melodyCounter]->duration = (rand()%(3-1))+1;
+    Melody[melodyCounter]->duration = (rand()%(4-1))+1;
   }
 
   // print out the melody
-  for (int i = 0; i < melodyCounter; i++) {
-    printf("%s", Melody[melodyCounter]->note); beatCount++;
-    if (beatCount == 3) {printf("|  "); beatCount = 0; measureCount++;}
-    if (measureCount == 3) {printf("\n"); measureCount = 0;}
-    dur = Melody[melodyCounter]->duration;
+  for (int i = 0; i < melodyCounter+1; i++) {
+    printf("%s", Melody[i]->note); beatCount++;
+    if (beatCount == 4) {printf("|  "); beatCount = 0; measureCount++;}
+    if (measureCount == 4) {printf("\n"); measureCount = 0;}
+    dur = Melody[i]->duration;
     while (--dur > 0) {  // pre-decrement so a one beat note has no '-  '
       printf("-  "); beatCount++;
-      if (beatCount == 3) {printf("|  "); beatCount = 0; measureCount++;}
-      if (measureCount == 3) {printf("\n"); measureCount = 0;}
+      if (beatCount == 4) {printf("|  "); beatCount = 0; measureCount++;}
+      if (measureCount == 4) {printf("\n"); measureCount = 0;}
     }
   }
+  printf("|\n");
 }
 
 char *parseNote(int n) {
