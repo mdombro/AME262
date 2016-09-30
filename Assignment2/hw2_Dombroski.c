@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
 #define BLOCK 64
 
@@ -10,7 +12,7 @@ typedef struct {
 
 char *parseNote(int n);
 
-int main (int argc, char[] argv) {
+int main (int argc, char *argv[]) {
   //char notes[][] = {'1', '2', '3', '4', '5', '6', '7', 'i^'};  // available notes on the C major scale
   time_t t;  // variable to hold system time that will seed the random number gen
   int voiceLeadingFlag = 1;
@@ -24,30 +26,36 @@ int main (int argc, char[] argv) {
   srand((unsigned) time(&t));  // seed rand
 
   // declare block of struct pointers
-  NOTE **Melody = malloc(BLOCK * sizeof(*NOTE));
+  NOTE **Melody = malloc(BLOCK * sizeof(NOTE*));
 
   // allocate first C note at beginning of Melody
   Melody[0] = malloc(sizeof(NOTE));
-  Melody[0]->note = "1  ";
+  strcpy(Melody[0]->note, "1  ");
   Melody[0]->duration = (rand()%(3-1))+1;
 
   // loop executes until a D-C or B-c transition occurs
   while (voiceLeadingFlag == 1) {
     melodyCounter++;
+
     // check if more memory is needed
     if (melodyCounter == n*BLOCK) {
       n++;
-      Melody = realloc(Melody, n*BLOCK*sizeof(*NOTE));
+      Melody = realloc(Melody, n*BLOCK*sizeof(NOTE*));
     }
+
+    // Generate random note
     note = (rand()%(8-1))+1;
+      printf("%d\n", note);
     // Check for avoid conditions
+
     // check for leading voice conditions
     if ((strcmp(Melody[melodyCounter-1]->note, "2  ") == 0 && note == 1) || (strcmp(Melody[melodyCounter-1]->note, "7  ") == 0 && note == 8)) {
       voiceLeadingFlag = 0;
     }
 
     Melody[melodyCounter] = malloc(sizeof(NOTE));
-    Melody[melodyCounter]->note = parseNote(note);
+    printf("%s\n", parseNote(note));
+    strcpy(Melody[melodyCounter]->note, parseNote(note));
     Melody[melodyCounter]->duration = (rand()%(3-1))+1;
   }
 
@@ -67,30 +75,31 @@ int main (int argc, char[] argv) {
 
 char *parseNote(int n) {
   char *note;
+  note = malloc(4);
   switch (n) {
     case 1:
-      *note = "1  ";
+      strcpy(note, "1  ");
       break;
     case 2:
-      *note = "2  ";
+      strcpy(note, "2  ");
       break;
     case 3:
-      *note = "3  ";
+      strcpy(note, "3  ");
       break;
     case 4:
-      *note = "4  ";
+      strcpy(note, "4  ");
       break;
     case 5:
-      *note = "5  ";
+      strcpy(note, "5  ");
       break;
     case 6:
-      *note = "6  ";
+      strcpy(note, "6  ");
       break;
     case 7:
-      *note = "7  ";
+      strcpy(note, "7  ");
       break;
     case 8:
-      *note = "1^ ";
+      strcpy(note, "1^ ");
       break;
     default:
       break;
