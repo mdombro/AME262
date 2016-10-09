@@ -14,6 +14,7 @@ int main(int argc, char* argv[]) {
     //          Variable declarations section          //
     FILE *fp = NULL;
     char line[BLOCK];
+    float in1, in2;
 
     //*************************************************//
     //                 Program section                 //
@@ -40,9 +41,14 @@ int main(int argc, char* argv[]) {
     printf("%s\n", line);
     if (strcmp(line, "q\n") == 0) {
         printf("No breakpoints written, exiting\n");
+        return 1;
     }
-    if () {
-        
+    sscanf("%f %f", &in1, &in2);
+    if (in1 == 0) {
+        printf("The first time must be 0!");
+        return 1;
     }
+
+    
 
 }
