@@ -13,6 +13,7 @@ int main(int argc, char* argv[]) {
     //*************************************************//
     //          Variable declarations section          //
     FILE *fp = NULL;
+    char line[BLOCK];
 
     //*************************************************//
     //                 Program section                 //
@@ -31,11 +32,17 @@ int main(int argc, char* argv[]) {
     }
 
     // Create breakpoints structure with a starting size
-    BREAKPOINT **points = malloc(BLOCK * sizeof(BREAKPIONT*));
+    BREAKPOINT **points = malloc(BLOCK * sizeof(BREAKPOINT*));
 
     printf("Breakpoint: Output breakpoints to a text file.\nRulse:\n1. The first number gives the time for the breakpoint, the second number gives the value at that time.\n2. The time of the first point must be 0.\n3. The times must be increasing.\n4. Two breakpoints cannot have the same time.\n5. A breakpoint file must contain at least two points.\n");
-
-    while () {
+    printf("Enter the first breakpoint (time must be 0): ");
+    fgets(line, BLOCK, stdin);
+    printf("%s\n", line);
+    if (strcmp(line, "q\n") == 0) {
+        printf("No breakpoints written, exiting\n");
+    }
+    if () {
         
     }
+
 }
