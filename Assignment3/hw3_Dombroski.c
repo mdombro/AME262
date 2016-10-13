@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     //*************************************************//
     //                 Program section                 //
     if (argc < 2) {
-        printf("Sorry, please input a filename\n");
+        printf("Usage: ./hw3_Dombroski filename\n");
         return 1;
     }
     if (argc > 2) {
@@ -43,10 +43,9 @@ int main(int argc, char* argv[]) {
     // Create breakpoints structure with a starting size
     BREAKPOINT **points = malloc(BLOCK * sizeof(BREAKPOINT*));
 
-    printf("Breakpoint: Output breakpoints to a text file.\nRulse:\n1. The first number gives the time for the breakpoint, the second number gives the value at that time.\n2. The time of the first point must be 0.\n3. The times must be increasing.\n4. Two breakpoints cannot have the same time.\n5. A breakpoint file must contain at least two points.\n");
+    printf("Breakpoint: Output breakpoints to a text file.\nRules:\n1. The first number gives the time for the breakpoint, the second number gives the value at that time.\n2. The time of the first point must be 0.\n3. The times must be increasing.\n4. Two breakpoints cannot have the same time.\n5. A breakpoint file must contain at least two points.\n");
     printf("Enter the first breakpoint (time must be 0) (q to exit): ");
     fgets(line, MAXSIZE, stdin);
-    printf("%s", line);
     if (strcmp(line, "q\n") == 0) {
         printf("No breakpoints written, exiting\n");
         return 0;
@@ -70,7 +69,7 @@ int main(int argc, char* argv[]) {
         if (strcmp(line, "q\n") == 0) {
             flag = 0;
             if (breakCounter == 0) {
-                printf("You only entrede one breakpoint\nNo file will be written\n");
+                printf("You only entered one breakpoint\nNo file will be written\n");
             }
             continue;
         }
@@ -95,16 +94,17 @@ int main(int argc, char* argv[]) {
         points[breakCounter]->amp = in2;
     }
 
-    for (int i = 0; i < breakCounter+1; i++) {
-        file_error = fprintf(fp, "%f    %f\n", points[i]->t, points[i]->amp);
-        if (file_error < 0) {
-            perror("There was an error writing the file!\n");
-            break;
-        }
-    }
-
-    if (file_error > 0) {
-        printf("%d breakpoints were written to %s\n", breakCounter+1, argv[1]);
+    if (breakCounter > 1) {
+      for (int i = 0; i < breakCounter+1; i++) {
+          file_error = fprintf(fp, "%f    %f\n", points[i]->t, points[i]->amp);
+          if (file_error < 0) {
+              perror("There was an error writing the file!\n");
+              break;
+          }
+      }
+      if (file_error > 0) {
+          printf("%d breakpoints were written to %s\n", breakCounter+1, argv[1]);
+      }
     }
 
     fclose(fp);
