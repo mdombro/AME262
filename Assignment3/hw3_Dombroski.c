@@ -1,6 +1,10 @@
+//   hw3_Dombroski.c
+//   Matthew Dombroski
+
+
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <string.h>&
 
 #define BLOCK 10
 #define MAXSIZE 40
